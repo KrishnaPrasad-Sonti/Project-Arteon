@@ -24,6 +24,8 @@ public interface AdminService
       public List<Users> getAdmins() ;
       public Map<String, Long> getRoleCounts();
       
+      public String userdeletion(long id);
+      
       
       
 }

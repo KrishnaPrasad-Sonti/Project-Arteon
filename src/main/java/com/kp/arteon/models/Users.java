@@ -1,6 +1,6 @@
 package com.kp.arteon.models;
 
-import java.util.List;
+import java.util.Map;
 
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
@@ -9,56 +9,46 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Table;
+import jakarta.persistence.MapKeyColumn;
+
 
 @Entity
 @Table(name = "user_table")
 public class Users {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)  // Auto-incrementing primary key
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "username", length = 50, unique = true, nullable = false)  // Unique and non-nullable
+    @Column(name = "username", length = 50, unique = true, nullable = false)
     private String username;
 
-    @Column(name = "password", length = 50, nullable = false)  // Non-nullable
+    @Column(name = "password", length = 50, nullable = false)
     private String password;
 
-    @Column(name = "email", length = 100, unique = true, nullable = false)  // Unique and non-nullable
+    @Column(name = "email", length = 100, unique = true, nullable = false)
     private String email;
 
-    @Column(name = "is_role1") // Representing one role
+    @Column(name = "is_role1")
     private boolean isRole1;
 
-    @Column(name = "is_role2") // Representing another role
+    @Column(name = "is_role2")
     private boolean isRole2;
-    
-    
-    @Column(name = "profile_photo_url", length = 255,nullable=true) // Cloud URL for profile photo
-    private String profilePhotoUrl;
 
-     
+    @Column(name = "profile_photo_url", length = 255, nullable = true)
+    private String profilePhotoUrl;
 
     @ElementCollection
     @CollectionTable(
-        name = "gallery_images",  // Name of the table
-        joinColumns = @JoinColumn(name = "user_id")  // Foreign key to the Users table
+        name = "gallery_images_metadata", 
+        joinColumns = @JoinColumn(name = "user_id") 
     )
-    @Column(name = "image_url", length = 255)  // The column to store the image URL
-    private List<String> galleryImages;
+    @MapKeyColumn(name = "image_url") // This is the column for the key (image URL)
+    @Column(name = "image_description", length = 255) // This is the column for the value (description)
+    private Map<String, String> galleryImagesMetadata;
 
- //-----------------------------------------------
-    
-    // Additional field for the gallery image description (e.g., description or metadata)
-    @ElementCollection
-    @CollectionTable( name = "gallery_images_metadata",// New table for metadata
-        joinColumns = @JoinColumn(name = "user_id")  // Foreign key to the Users table
-                    )
-    @Column(name = "image_description", length = 255)  // New column for storing additional data
-    private List<String> galleryImagesDescriptions;
-    
     // Getters and Setters
     public Long getId() {
         return id;
@@ -108,34 +98,22 @@ public class Users {
         this.isRole2 = isRole2;
     }
 
-    // Method to get user type directly from booleans
+    public String getProfilePhotoUrl() {
+        return profilePhotoUrl;
+    }
+
+    public void setProfilePhotoUrl(String profilePhotoUrl) {
+        this.profilePhotoUrl = profilePhotoUrl;
+    }
+
+    public Map<String, String> getGalleryImagesMetadata() {
+        return galleryImagesMetadata;
+    }
+
+    public void setGalleryImagesMetadata(Map<String, String> galleryImagesMetadata) {
+        this.galleryImagesMetadata = galleryImagesMetadata;
+    }
     public String getUserType() {
         return (isRole1 ? "1" : "0") + (isRole2 ? "1" : "0"); // "00", "01", "10", "11"
     }
-
-	public String getProfilePhotoUrl() {
-		return profilePhotoUrl;
-	}
-
-	public void setProfilePhotoUrl(String profilePhotoUrl) {
-		this.profilePhotoUrl = profilePhotoUrl;
-	}
-
-	public List<String> getGalleryImages() {
-		return galleryImages;
-	}
-
-
-
-	public void setGalleryImages(List<String> galleryImages) {
-		this.galleryImages = galleryImages;
-	}
-	
-	public List<String> getGalleryImagesDescriptions() {
-		return galleryImagesDescriptions;
-	}
-
-	public void setGalleryImagesDescriptions(List<String> galleryImagesDescriptions) {
-		this.galleryImagesDescriptions = galleryImagesDescriptions;
-	}
 }

@@ -162,10 +162,38 @@ public class AdminServiceImpl  implements AdminService
 	}
 
 
+
+	@Override
+	public String userdeletion(long id) 
+	{
+	    Users user = userrepo.findById(id).orElse(null);
+
+	    // If user not found, return error message
+	    if (user == null) 
+	    {
+	        return "User not found!";
+	    }
+	    else
+	    {
+	        userrepo.delete(user);
+	        return "User deleted successfully!";
+	    }
+	    
+	}
+
+		
+	
+	
+	
+	
+	
+	}
+
+
 	
 
 
 
 
 
-}
+

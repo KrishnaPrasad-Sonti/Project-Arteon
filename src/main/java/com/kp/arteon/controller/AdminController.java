@@ -4,6 +4,7 @@ import java.util.*;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -106,4 +107,17 @@ public class AdminController {
     
     }
     
+    
+    @DeleteMapping("/userdeletion/{id}")  // Corrected path
+    public ResponseEntity<?> deleteuser(@PathVariable long id) {  // Use @PathVariable for path variables
+        String message = adminservice.userdeletion(id);
+
+        if ("User not found!".equals(message)) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)  // Use 404 when user is not found
+                                 .body("{\"success\": false, \"message\": \"User not found!\"}");
+        } else {
+            return ResponseEntity.status(HttpStatus.OK)  // Use 200 OK when deletion is successful
+                                 .body("{\"success\": true, \"message\": \"" + message + "\"}");
+        }
+    }   
 }
