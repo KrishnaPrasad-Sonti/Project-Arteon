@@ -1,5 +1,6 @@
 package com.kp.arteon.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -29,6 +30,7 @@ import jakarta.persistence.ManyToOne;
 
 	    @ManyToOne
 	    @JoinColumn(name = "exhibition_id")
+	    @JsonIgnore // Prevents back-reference from being serialized
 	    private Exhibition exhibition;
 
 	    // Default constructor

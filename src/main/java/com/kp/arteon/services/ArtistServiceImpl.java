@@ -12,7 +12,7 @@ import com.kp.arteon.repository.UserRepository;
 @Service
 public class ArtistServiceImpl implements ArtistService {
 
-    @Autowired
+    @Autowired 
     private UserRepository userrepo;
 
     @Override
@@ -73,7 +73,7 @@ public class ArtistServiceImpl implements ArtistService {
         if (art.getArtDetails() != null && !art.getArtDetails().isEmpty() && art.getImageUrl() != null && !art.getImageUrl().isEmpty()) {
             user.getGalleryImagesMetadata().put(art.getImageUrl(), art.getArtDetails()); // Add to map with image URL as the key
         }
-
+ 
         // Save the updated user with new artwork data
         userrepo.save(user);
 
