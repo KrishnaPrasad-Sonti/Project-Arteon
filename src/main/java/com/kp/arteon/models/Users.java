@@ -31,10 +31,10 @@ public class Users {
     @Column(name = "email", length = 100, unique = true, nullable = false)
     private String email;
 
-    @Column(name = "is_role1")
+    @Column(name = "is_role1",columnDefinition = "TINYINT(1)")
     private boolean isRole1;
 
-    @Column(name = "is_role2")
+    @Column(name = "is_role2",columnDefinition = "TINYINT(1)")
     private boolean isRole2;
 
     @Column(name = "profile_photo_url", length = 255, nullable = true)
