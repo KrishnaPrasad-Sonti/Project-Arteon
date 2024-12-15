@@ -11,7 +11,7 @@ package com.kp.arteon;
 	    @Override
 	    public void addCorsMappings(CorsRegistry registry) {
 	        registry.addMapping("/**")  // Allow all paths
-	                .allowedOrigins("http://localhost:5173")  // Allow frontend (React) to access backend
+	                .allowedOrigins("https://projectarteon.vercel.app/")  // Allow frontend (React) to access backend
 	                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")  // Allowed HTTP methods
 	                .allowedHeaders("*")  // Allow all headers
 	                .allowCredentials(true);  // Allow credentials if needed
